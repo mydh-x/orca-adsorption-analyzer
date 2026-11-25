@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ORCA Adsorption Analyzer</title>
+<meta name="description" content="Baca output ORCA dan siapkan tabel serta grafik analisis adsorpsi gas pada klaster: struktur, energi kohesif, energi adsorpsi, termodinamika, muatan, orbital, dan parameter sensor.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="topnav" aria-label="Halaman">
+  <div class="topnav-inner">
+    <a class="brand" href="#beranda"><span class="brand-mark" aria-hidden="true"></span>ORCA Adsorption Analyzer</a>
+    <div id="nav" class="navlinks">
+      <a href="#beranda">Beranda</a>
+      <a href="#struktur"><b>1</b> Struktur</a>
+      <a href="#kohesif"><b>2</b> Kohesif</a>
+      <a href="#adsorpsi"><b>3</b> Adsorpsi</a>
+      <a href="#termodinamika"><b>4</b> Termodinamika</a>
+      <a href="#muatan"><b>5</b> Dipol &amp; muatan</a>
+      <a href="#orbital"><b>6</b> Orbital</a>
+      <a href="#sensor"><b>7</b> Sensor</a>
+      <a href="#file">File</a>
+    </div>
+  </div>
+</nav>
+<main id="main" class="wrap"></main>
+<footer class="wrap foot">
+  <p>Rumus mengikuti de Sousa Sousa dkk., <em>Langmuir</em> 2024, 40, 23310 (persamaan sensitivitas memakai bentuk simetris yang mereproduksi Tabel 5 jurnal tersebut). Konversi: 1 E<sub>h</sub> = 627.5095 kcal/mol = 27.211386 eV; k<sub>B</sub> = 8.617333×10⁻⁵ eV/K; A<sub>Richardson</sub> = 1.20×10⁶ A m⁻² K⁻².</p>
+  <p>File diproses di browser; data yang dimuat disimpan di browser ini saja (IndexedDB) agar tidak hilang saat halaman dimuat ulang. Klik "Hapus semua" di Beranda untuk menghapusnya.</p>
+</footer>
+<script src="sample/contoh.js"></script>
+<script src="js/parser.js"></script>
+<script src="js/chem.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
