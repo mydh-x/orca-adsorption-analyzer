@@ -46,6 +46,7 @@ function notice(html, err = false) {
   n.hidden = !html; n.innerHTML = html || ""; n.classList.toggle("err", err);
 }
 async function ingest(fileList) {
+  if (STATE.sample) clearAll(false);
   const msgs = []; let n = 0;
   for (const f of [...fileList]) {
     const res = addFile(f.name, await f.text());
