@@ -2,7 +2,7 @@
 
 Aplikasi web statis untuk membaca file output [ORCA](https://www.faccts.de/orca/). Dari output itu, aplikasi menyiapkan tabel dan grafik analisis adsorpsi gas pada klaster: struktur, energi kohesif, energi adsorpsi, termodinamika, momen dipol dan muatan, orbital frontier, serta parameter sensor dan selektivitas.
 
-Semua proses berjalan di browser pengguna. File tidak diunggah ke server mana pun.
+Semua perhitungan berjalan di browser pengguna. Data hanya dikirim ke server bila pengguna menekan **Bagikan** (lihat "Berbagi antarlaptop").
 
 ## Fitur
 
@@ -28,6 +28,15 @@ CSV tersedia dalam dua format. Format internasional memakai koma sebagai pemisah
 4. Buka halaman 1–7 dan unduh tabel atau grafik yang dibutuhkan.
 
 Tombol **Muat contoh** memuat output contoh (Zn₃O₃ dan SiZn₃O₃ dengan NH₃ dan H₂S, r²SCAN-3c, ORCA 6.1).
+
+## Berbagi antarlaptop
+
+Di Beranda ada tombol **Bagikan**. Tombol ini menyimpan seluruh proyek (file output, peran, pasangan sistem, energi atom, dan pengaturan) ke Supabase dalam bentuk terkompres, lalu memberi **kode 8 karakter** dan tautan `…/#p=KODE`. Di laptop lain, buka tautan itu atau ketik kodenya di kotak **Buka kode**.
+
+- Data hanya bisa dibuka oleh yang tahu kodenya. Tabelnya tidak bisa dibaca langsung; pengunjung hanya bisa memanggil fungsi `share_save` dan `share_load`.
+- Batas 8 MB per proyek setelah dikompres. Sebagai gambaran, tiga output lengkap (1,8 MB) menjadi sekitar 340 KB.
+- Proyek terhapus otomatis setelah 30 hari.
+- Konfigurasi server (URL dan *publishable key*) ada di `js/share.js`. Skrip database ada di `supabase_share.sql`; jalankan sekali di Supabase SQL Editor bila memakai proyek Supabase sendiri.
 
 ## Menjalankan
 
@@ -82,6 +91,7 @@ js/chem.js          geometri, parameter adsorpsi dan sensor
 js/store.js         daftar file, pasangan sistem, penyimpanan di browser
 js/ui.js            tabel, CSV, grafik SVG, penampil 3D
 js/pages.js         isi setiap halaman
+js/share.js         berbagi proyek (Bagikan / Buka kode) lewat Supabase
 js/app.js           navigasi dan input file
 sample/contoh.js    output contoh (dipotong ke blok yang dibaca aplikasi)
 ```

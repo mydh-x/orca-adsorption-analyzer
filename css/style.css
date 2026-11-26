@@ -163,3 +163,10 @@ pre.snip mark { background: var(--accent-soft); color: var(--ink); outline: 1px 
 
 .foot { font-size: 0.82rem; color: var(--muted); gap: 6px; padding-block: 0 32px; }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+
+/* berbagi proyek antarlaptop */
+.share { border-top: 1px solid var(--line); padding-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.share input { width: 12em; text-transform: uppercase; font-family: var(--f-mono); }
+.sharebox { background: var(--good-soft); border-radius: 6px; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; overflow-wrap: anywhere; }
+.sharebox .code { font-family: var(--f-mono); font-weight: 600; font-size: 1.25rem; letter-spacing: 0.12em; color: var(--ink); }
+.errtext { color: var(--bad); }
