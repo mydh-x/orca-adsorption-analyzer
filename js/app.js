@@ -17,7 +17,28 @@ function route() {
   const pg = PAGES.find((p) => p.id === page);
   document.title = (pg ? `${pg.no}. ${pg.short} · ` : page === "file" ? "File · " : "") + "ORCA Adsorption Analyzer";
 }
-window.addEventListener("hashchange", () => { route(); window.scrollTo(0, 0); });
+window.addEventListener("hashchange", () => {
+  const m = location.hash.match(/^#p=([A-Za-z0-9]+)/);
+  if (m) { openShared(m[1]); return; }
+  route(); window.scrollTo(0, 0);
+});
+
+/* buka proyek bersama dari kode (tombol "Buka kode" atau tautan #p=KODE) */
+async function openShared(code) {
+  if (location.hash !== "#beranda") history.replaceState(null, "", "#beranda");
+  route();
+  const btn = $("#openbtn"); if (btn) { btn.disabled = true; btn.textContent = "Membuka…"; }
+  try {
+    const res = await shareLoad(code);
+    autoPair();
+    await save();
+    route();
+    notice(`Proyek ${res.code} dibuka: ${res.n} file${res.savedAt ? `, disimpan ${new Date(res.savedAt).toLocaleString("id-ID")}` : ""}.`);
+  } catch (err) {
+    route();
+    notice(esc(err.message), true);
+  }
+}
 window.addEventListener("resize", () => VIEWERS.forEach((v) => v.draw()));
 
 function notice(html, err = false) {
@@ -42,6 +63,25 @@ function afterHome() {
   $("#fileinput").onchange = (e) => { ingest(e.target.files); e.target.value = ""; };
   $("#loadsample").onclick = () => { loadSamples(); route(); };
   $("#clearall").onclick = async () => { clearAll(); await save(); route(); };
+  $("#sharebtn").onclick = async (e) => {
+    const b = e.currentTarget, box = $("#sharebox");
+    b.disabled = true; b.textContent = "Menyimpan…";
+    try {
+      const code = await shareSave(), link = shareLink(code);
+      box.hidden = false;
+      box.innerHTML = `<p>Kode proyek: <span class="code">${code}</span> <button class="dl" id="copycode">Salin kode</button></p>
+        <p class="small">Tautan: <a href="${esc(link)}">${esc(link)}</a> <button class="dl" id="copylink">Salin tautan</button></p>
+        <p class="muted small">Buka tautan itu, atau ketik kodenya di laptop lain. Berlaku ${SHARE.days} hari. Siapa pun yang memegang kode bisa membuka datanya, jadi bagikan hanya ke orang yang perlu. Bila data diubah, klik Bagikan lagi untuk mendapat kode baru.</p>`;
+      const cp = (id, t) => ($("#" + id).onclick = async (ev) => { try { await navigator.clipboard.writeText(t); flash(ev.currentTarget, "Tersalin"); } catch { flash(ev.currentTarget, "Salin manual"); } });
+      cp("copycode", code); cp("copylink", link);
+    } catch (err) {
+      box.hidden = false; box.innerHTML = `<p class="errtext">${esc(err.message)}</p>`;
+    }
+    b.disabled = false; b.textContent = "Bagikan";
+  };
+  const open = () => openShared($("#codein").value);
+  $("#openbtn").onclick = open;
+  $("#codein").onkeydown = (e) => { if (e.key === "Enter") open(); };
   $$("select[data-role]").forEach((s) => s.onchange = () => { const f = fileById(s.dataset.role); f.role = s.value; f.roleManual = true; save(); });
   $$("button[data-del]").forEach((b) => b.onclick = () => {
     const id = b.dataset.del;
@@ -82,5 +122,6 @@ document.addEventListener("paste", (e) => {
 (async () => {
   const ok = await restore();
   if (!ok) loadSamples();
-  route();
+  const m = location.hash.match(/^#p=([A-Za-z0-9]+)/);
+  if (m) openShared(m[1]); else route();
 })();

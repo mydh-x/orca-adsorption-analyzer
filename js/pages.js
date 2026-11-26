@@ -80,7 +80,7 @@ function renderHome() {
       <p class="eyebrow">Analisis adsorpsi gas pada klaster · ORCA</p>
       <h1>Dari <code>orca.out</code> ke tabel dan grafik laporan</h1>
       <p class="lede">Masukkan file output ORCA untuk klaster, molekul gas, kompleks, dan atom tunggal. Aplikasi membaca angkanya, memasangkan sistemnya, lalu menyiapkan hasil untuk tiap poin pembahasan, lengkap dengan tabel dan grafik yang bisa diunduh.</p>
-      <p class="muted small">Semua file diproses di browser Anda dan tidak diunggah ke mana pun. Diuji pada ORCA 6.1 (RKS dan UKS).</p>
+      <p class="muted small">Semua file diproses di browser Anda. Data baru dikirim ke server hanya bila Anda menekan "Bagikan". Diuji pada ORCA 6.1 (RKS dan UKS).</p>
     </div>
     <div class="drop" id="drop">
       <strong>Tarik file output ke sini</strong>
@@ -90,6 +90,16 @@ function renderHome() {
         <input type="file" id="fileinput" multiple hidden>
         <button id="loadsample">Muat contoh</button>
         <button id="clearall">Hapus semua</button>
+      </div>
+      <div class="share">
+        <span class="small"><strong>Pindah laptop?</strong> Klik <em>Bagikan</em> untuk mendapat kode, lalu buka kode itu di laptop lain.</span>
+        <div class="row">
+          <button id="sharebtn">Bagikan</button>
+          <span class="muted small">atau</span>
+          <input type="text" id="codein" placeholder="kode, mis. K7Q2XM8P" maxlength="12" autocomplete="off" aria-label="Kode proyek">
+          <button id="openbtn">Buka kode</button>
+        </div>
+        <div id="sharebox" class="sharebox" hidden></div>
       </div>
       <div id="notice" class="banner" ${STATE.sample ? "" : "hidden"}>${STATE.sample ? "Contoh dimuat: Zn₃O₃ dan SiZn₃O₃ dengan NH₃, SiZn₃O₃ dengan H₂S, serta atom Zn, O, Si, N, H (r²SCAN-3c, ORCA 6.1). Masukkan file Anda untuk menggantinya." : ""}</div>
     </div>
